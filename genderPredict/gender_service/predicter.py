@@ -53,9 +53,6 @@ def prediction(model=None, name=''):
 
 
 
-
-
-
 def main():
 	test_name = '黃秋生'
 	name_vector = convert_name_to_vector(test_name)
