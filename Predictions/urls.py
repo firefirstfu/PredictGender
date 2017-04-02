@@ -8,7 +8,7 @@ from weatherPredict.views import weather_predict
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^backend/admin/', admin.site.urls),
 
     # 天氣預測
     # url(r'^predict/weather/$', weather_predict),
