@@ -1,0 +1,161 @@
+{%load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Predict Weather</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<!-- jquery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+	<style type="text/css">
+		
+
+		html ,body{
+			height: 100%;
+			width: 100%;
+		}
+
+		p{
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+		button{
+			margin-top:15px;
+		}
+
+
+
+		.container{
+			/*background-image: url("{%static 'images/background.jpg'%}");*/
+			background-image: url("http://img.hnol.net/bbsimg/2006-02-26/19/200622619271151077.jpg");
+			height: 100%;
+			width: 100%;
+			background-position: center;
+			background-size: cover;
+			padding-top: 150px;
+		}
+
+		.center{
+			text-align: center;
+		}
+
+		.h-text-color{
+			color: white;
+			font-weight: bold;
+		}
+		.p-text-color{
+			color: black;
+		}
+
+		.alert{
+			margin-top: 28px;
+			display: none;
+		}
+
+		
+		
+		
+	</style>
+
+</head>
+
+
+
+<body>
+
+	<div class="container">
+
+		<div class="row">		
+			<div class="col-md-6 col-md-offset-3 center">
+				<h1 class="h-text-color">Weather Predictor</h1>
+				<p class="lead p-text-color">Enter your city below to get a forecast for the weather.</p>
+
+				<form action="" method="POST" class="form-group form-weather">
+					<input type="" name="city" class="form-control" id="city" placeholder="Eg. lodon, Paris, San Francisco..">
+					<br>
+					<button type="" class="btn btn-success btn-lg weather-btn">Find Weather</button>
+
+
+					<div id="success" class="alert alert-success">Success</div>
+					<div id="fail" class="alert alert-danger">Could not found the weather data of your city, Please try again.</div>
+					<div id="no-city" class="alert alert-danger">Please enter a city.</div>
+				</form>
+				
+			</div>
+		</div>
+
+	</div>	
+	
+
+	
+
+
+
+	<!-- jQuery -->
+	<script type="text/javascript">
+
+		(function($){
+
+			$(document).ready(function() {
+
+				
+				$('.form-weather').submit(function(event) {
+					$('.alert').fadeOut();
+					if ($('#city').val() == '') {
+						$('#no-city').fadeIn();
+					}else{
+						var form_data = {'city':$('.form-weather').serialize()};
+				   		// 天气预测--GET
+				   		$.ajax({
+				               type: 'GET',
+				               data: form_data,
+				               url: '/predict/weather/',
+				               async:false,
+				               success:function(data){
+				               		$('#success').fadeIn();
+				               		console.log(data['respond']);
+				               		var weather = data['respond'];
+				               		if (data['respond'] == 'error input') {
+				               			$('#success').html('Error Location! Please enter new location!').fadeIn();
+				               		}else{
+				               			$('#success').html(weather).fadeIn();
+				               		}
+				               		
+								},error:function(data){
+									$('#faile').fadeIn();
+									console.log('fail ajax');
+				           		}
+				        });
+					}
+
+					return false;
+				});
+
+
+				$('#city').focus(function(event) {
+					$('.alert').fadeOut();
+				});
+
+			});
+
+			
+
+		}(jQuery));
+
+	</script>
+
+
+	
+	
+</body>
+</html>

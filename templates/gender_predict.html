@@ -1,0 +1,147 @@
+{%load staticfiles %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>PredictGender</title>
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<!-- jquery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<style type="text/css">
+
+		html ,body{
+			height: 100%;
+			width: 100%;
+
+		}
+		p{
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+		button{
+			margin-top:15px;
+		}
+
+
+		.container{
+			background-image: url("{%static 'images/background.jpg'%}");
+			height: 100%;
+			width: 100%;
+			background-position: center;
+			background-size: cover;
+			padding-top: 150px;
+		}
+
+		.center{
+			text-align: center;
+		}
+
+		.h-text-color{
+			color: black;
+			font-weight: bold;
+		}
+		.p-text-color{
+			color: black;
+		}
+
+		.alert{
+			margin-top: 28px;
+			display: none;
+		}
+
+		.font{
+			font-family: "Helvetica Neue", Helvetica, Arial, "微軟正黑體", "微软雅黑", "メイリオ", "맑은 고딕", sans-serif;
+		}
+
+	</style>
+
+</head>
+
+
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 center font">
+				<h2 class="h-text-color font">Predict gender</h1>
+				<p class="lead p-text-color">Please enter your name predict gender.</p>
+
+				<form action="" method="get" class="form-group form-gender">
+					<input type="" name="pre-name" class="form-control" id="pre-name" placeholder="Eg.黃小明">
+					<button type="" class="btn btn-success btn-lg">Find Gender</button>
+
+					<div id="success" class="alert alert-success">Success</div>
+					<div id="fail" class="alert alert-danger">Please refresh your name!</div>
+					<div id="no-name" class="alert alert-danger">Enter your name.</div>
+				</form>
+			</div>
+		
+		</div>
+	</div>
+
+
+
+
+	<!-- jQuery -->
+	<script type="text/javascript">
+
+		(function($){
+
+			$(document).ready(function() {
+
+				console.log('enter jquery scope');
+
+				$('.form-gender').submit(function(event) {
+					$('.alert').fadeOut();
+
+					if ($('#pre-name').val() == '') {
+						$('#no-name').fadeIn();
+					}else{
+						var form_data = {'pre-name': $('.form-gender').serialize()};
+
+				   		// 性別预测--GET
+				   		$.ajax({
+				               type: 'GET',
+				               data: form_data,
+				               url: '/predict/gender/',
+				               async:false,
+				               success:function(data){
+
+				               		$('#success').fadeIn();
+				               		console.log(data['respond']);
+				               		var gender = data['respond'];
+				               		if (data['respond'] == 'error input') {
+				               			$('#success').html('Error Location! Please enter new location!').fadeIn();
+				               		}else{
+				               			$('#success').html(gender).fadeIn();
+				               		}
+				               		
+								},error:function(data){
+									$('#faile').fadeIn();
+									console.log('fail ajax');
+				           		}
+				        });
+					}
+					return false;
+				});
+
+				$('#pre-name').focus(function(event) {
+					$('.alert').fadeOut();
+				});
+
+			});
+		}(jQuery));
+	</script>
+
+
+
+</body>
+</html>
