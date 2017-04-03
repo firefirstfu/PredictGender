@@ -20,6 +20,7 @@ import predicter
 
 model = predicter.get_model()
 
+from time import sleep
 
 def gender_predict(request):
 
@@ -30,7 +31,7 @@ def gender_predict(request):
 		name = get_data['pre-name']
 		name = name.replace(" ", "")
 		print(name)
-
+		
 		try:
 			person = Gender.objects.get(name=name)
 			gender = person.gender
