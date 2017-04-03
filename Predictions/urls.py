@@ -12,6 +12,8 @@ urlpatterns = [
 
     # 天氣預測
     # url(r'^predict/weather/$', weather_predict),
+
     # 姓名預測性別
+    url(r'^$', gender_predict),
     url(r'^predict/gender/$', gender_predict),
 ]
