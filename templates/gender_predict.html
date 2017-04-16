@@ -5,6 +5,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>PredictGender</title>
+
+
+	<meta name="viewport" content="width=device-width, intial-scale=1">
+
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<!-- Optional theme -->
@@ -67,16 +71,16 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3 col-xs-12  center font">
-				<h2 class="h-text-color font">Predict gender</h1>
-				<p class="lead p-text-color">Please enter your name predict gender.</p>
+				<h2 class="h-text-color font">性別預測</h1>
+				<p class="lead p-text-color">請輸入姓名預測性別.</p>
 
 				<form action="" method="get" class="form-group form-gender">
 					<input type="" name="pre-name" class="form-control names" id="pre-name" placeholder="Eg.黃小明">
 					<button type="" class="btn btn-success btn-lg press">Find Gender</button>
 
 					<div id="success" class="alert alert-success">Success</div>
-					<div id="fail" class="alert alert-danger">Please refresh your name!</div>
-					<div id="no-name" class="alert alert-danger">Enter your name.</div>
+					<div id="fail" class="alert alert-danger">請重新輸入您的姓名!</div>
+					<div id="no-name" class="alert alert-danger">輸入您的姓名.</div>
 				</form>
 			</div>
 		</div>
@@ -87,6 +91,7 @@
 	<script type="text/javascript">
 		(function($){
 			$(document).ready(function() {
+                                
 				$('.form-gender').submit(function(event) {
 					$('.alert').fadeOut();
 
